@@ -25,20 +25,30 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({ Key? key }) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print("HomeScreen build method");
     final products = ref.watch(futureProductProvider);
     final products2 = ref.watch(productProvider);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        leading: Consumer(
+            builder: (context, ref, child) {
+              return IconButton(
+                onPressed: () => false,
+                icon: Text(ref.watch(counterProvider).toString(),style: const TextStyle(fontSize: 18),)
+              );
+            },
+          ),
         title: const Text("Riverpod Test App"),
         actions: [
           Consumer(
             builder: (context, ref, child) {
               return IconButton(
                 onPressed: () => false,
-                icon: Text(ref.watch(counterProvider).toString(),style: const TextStyle(fontSize: 18),)
+                icon: Text(ref.watch(productProvider).length.toString(),style: const TextStyle(fontSize: 18),)
               );
             },
           )
