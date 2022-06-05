@@ -10,7 +10,7 @@ Riverpod and dio dependencies were used in these processes
 
 
 ![alt text](https://raw.githubusercontent.com/SafakB/RiverpodApi/main/schema.jpg)
-![alt text](https://raw.githubusercontent.com/SafakB/RiverpodApi/main/screenshot.png)
+![alt text](https://raw.githubusercontent.com/SafakB/RiverpodApi/main/screenshot.jpg)
 
 - [Riverpod Docs](https://riverpod.dev/)
 - [Dio Docs](https://pub.dev/documentation/dio/latest/)
