@@ -30,24 +30,47 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(futureProductProvider);
     final products2 = ref.watch(productProvider);
+    final products3 = ref.watch(productNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         leading: Consumer(
             builder: (context, ref, child) {
               return IconButton(
-                onPressed: () => false,
-                icon: Text(ref.watch(counterProvider).toString(),style: const TextStyle(fontSize: 18),)
+                onPressed: () => ref.refresh(futureProductProvider),
+                icon: Row(
+                  children: [
+                    Text(ref.watch(counterProvider).toString(),style: const TextStyle(fontSize: 18),),
+                    const Icon(CupertinoIcons.refresh,size: 15,)
+                  ],
+                )
               );
             },
           ),
-        title: const Text("Riverpod Test App"),
+        title: Consumer(
+            builder: (context, ref, child) {
+              return IconButton(
+                onPressed: () => ref.refresh(productProvider),
+                icon: Row(
+                  children: [
+                    Text(ref.watch(productProvider).length.toString(),style: const TextStyle(fontSize: 18),),
+                    const Icon(CupertinoIcons.refresh,size: 11,)
+                  ],
+                )
+              );
+            },
+          ),
         actions: [
           Consumer(
             builder: (context, ref, child) {
               return IconButton(
-                onPressed: () => false,
-                icon: Text(ref.watch(productProvider).length.toString(),style: const TextStyle(fontSize: 18),)
+                onPressed: () => ref.refresh(productNotifierProvider),
+                icon: Row(
+                  children: [
+                    Text(ref.watch(productNotifierProvider).length.toString(),style: const TextStyle(fontSize: 18),),
+                    const Icon(CupertinoIcons.refresh,size: 11,)
+                  ],
+                )
               );
             },
           )
@@ -57,11 +80,7 @@ class HomeScreen extends ConsumerWidget {
         builder: (context, ref, child) {
           return FloatingActionButton(
            onPressed: (){
-              final oldData = ref.read(productProvider);
-              ref.read(productProvider.notifier).state = [
-                ProductsModel(id: 1, title: "test 1", description: "asdsad",thumbnail: "asda", stock: 1),
-                ...oldData
-              ];
+              ref.read(productNotifierProvider.notifier).addProduct(ProductsModel(id: 1, title: "test 1", description: "asdsad",thumbnail: "asda", stock: 1));
             },
           child: const Icon(CupertinoIcons.add),
         );
@@ -100,6 +119,33 @@ class HomeScreen extends ConsumerWidget {
                   child: ListTile(
                     title: Text(products2[index].title),
                     subtitle: Text(products2[index].description),
+                  ),
+                );
+              },
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: ListView.builder(
+              itemCount: products3.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(products3[index].title),
+                    subtitle: Text(products3[index].description),
+                    trailing: GestureDetector(
+                      onTap: (){
+                        // API DELETE ACTIONS
+                        // if true
+                        ref.read(productNotifierProvider.notifier).deleteProduct(products3[index]);
+
+                        // for refresh future provider
+                        //ref.refresh(futureProductProvider);
+                        //ref.refresh(productProvider);
+                        //ref.refresh(productNotifierProvider);
+                      },
+                      child: const Icon(CupertinoIcons.delete,color: Colors.red,),
+                    ),
                   ),
                 );
               },

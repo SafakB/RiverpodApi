@@ -4,6 +4,7 @@ import 'package:providers/services/api_service.dart';
 
 
 // Static data in provider
+// not using in this project
 final basicProvider = Provider<int>((ref) {
   return 5;
 });
@@ -22,6 +23,7 @@ final futureProductProvider = FutureProvider<List<ProductsModel>>((ref) async {
   }
   //write data at other provider
   ref.read(productProvider.notifier).state = products;
+  ref.read(productNotifierProvider.notifier).loadBulk(products);
   ref.read(counterProvider.notifier).state = products.length;
   return products;
 });
@@ -32,3 +34,29 @@ final futureProductProvider = FutureProvider<List<ProductsModel>>((ref) async {
 final productProvider = StateProvider<List<ProductsModel>>((ref) {
   return [];
 });
+
+
+
+// Local and cache provider with notifier
+
+final productNotifierProvider = StateNotifierProvider.autoDispose<ProductNotifier,List<ProductsModel>>((ref) {
+  return ProductNotifier([]);
+});
+
+
+class ProductNotifier extends StateNotifier<List<ProductsModel>>{
+  ProductNotifier(List<ProductsModel> state) : super(state);
+
+  void loadBulk(List<ProductsModel> bulk){
+    state = bulk;
+  }
+
+  void addProduct(ProductsModel product){
+    state = [product,...state];
+  }
+
+  void deleteProduct(ProductsModel product){
+    state = state.where((element) => element.id != product.id).toList();
+  }
+
+}
