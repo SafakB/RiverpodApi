@@ -1,16 +1,15 @@
 # providers
 
-A new Flutter project.
+How to use Riverpod with future api services
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+In this project, we get data with river pod and print it on the screen.
 
-A few resources to get you started if this is your first Flutter project:
+Riverpod and dio dependencies were used in these processes
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [Riverpod Docs](https://riverpod.dev/)
+- [Dio Docs](https://pub.dev/documentation/dio/latest/)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Safak Bahce
+Team leader at [Artonomi](https://www.artonomi.com)
