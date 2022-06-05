@@ -28,7 +28,6 @@ class HomeScreen extends ConsumerWidget {
   
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print("HomeScreen build method");
     final products = ref.watch(futureProductProvider);
     final products2 = ref.watch(productProvider);
     return Scaffold(
@@ -58,11 +57,10 @@ class HomeScreen extends ConsumerWidget {
         builder: (context, ref, child) {
           return FloatingActionButton(
            onPressed: (){
-              ref.read(counterProvider.notifier).state++;
               final oldData = ref.read(productProvider);
               ref.read(productProvider.notifier).state = [
-                ...oldData,
-                ProductsModel(id: 1, title: "test 1", description: "asdsad",thumbnail: "asda", stock: 1)
+                ProductsModel(id: 1, title: "test 1", description: "asdsad",thumbnail: "asda", stock: 1),
+                ...oldData
               ];
             },
           child: const Icon(CupertinoIcons.add),
